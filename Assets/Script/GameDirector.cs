@@ -15,20 +15,26 @@ public class GameDirector : MonoBehaviour
     public TextMeshProUGUI counttext;
     public static int Rpoint;
     public static bool startflag;
-    public GameObject generator; // generatorに値をセットする用
+    public GameObject generator; // generatorに値をセットする
+    
+    public string currentMode="normal"; // モード設定用
+    int bonusModeCount=0; // カウント用
+    float remainingTime; 
 
     // Start is called before the first frame update
     void Start()
     {
         timertext.enabled = false;
         counttext.enabled = false;
-        this.generator.GetComponent<ItemGenerator>().SetParameter(1.0f, -0.03f, 0.2f); // 初期値の設定 float span, float speed, float ratio
+        this.generator.GetComponent<ItemGenerator>().SetParameter(1.0f, -0.03f, 0.2f,"normal"); // 初期値の設定 float span, float speed, float ratio
     }
 
     // Update is called once per frame
     void Update()
     {
+        // TODO startflagの削除とexplainSceneの追加
         startflag = ButtonController.startflag;
+
 
         Rpoint = StarController.point;
         Rpointtext.text = Rpoint.ToString();
@@ -55,34 +61,68 @@ public class GameDirector : MonoBehaviour
             {
                 counttext.enabled = false;
                 timertext.text = this.time.ToString("F2");
-                this.generator.GetComponent<ItemGenerator>().SetParameter(1.0f, -0.03f, 0.2f);
+                this.generator.GetComponent<ItemGenerator>().SetParameter(1.0f, -0.03f, 0.2f,currentMode);
             }
             else if (20 <= this.time && this.time < 30)
             {
                 counttext.enabled = false;
                 timertext.text = this.time.ToString("F2");
-                this.generator.GetComponent<ItemGenerator>().SetParameter(0.8f, -0.04f, 0.4f);
+                this.generator.GetComponent<ItemGenerator>().SetParameter(0.8f, -0.04f, 0.4f,currentMode);
             }
             else if (10 <= this.time && this.time < 20)
             {
                 counttext.enabled = false;
                 timertext.text = this.time.ToString("F2");
-                this.generator.GetComponent<ItemGenerator>().SetParameter(0.5f, -0.05f, 0.6f);
+                this.generator.GetComponent<ItemGenerator>().SetParameter(0.5f, -0.05f, 0.6f,currentMode);
             }
             else if (0 <= this.time && this.time < 10)
             {
                 counttext.enabled = false;
                 timertext.text = this.time.ToString("F2");
-                this.generator.GetComponent<ItemGenerator>().SetParameter(0.7f, -0.04f, 0.3f);
+                this.generator.GetComponent<ItemGenerator>().SetParameter(0.7f, -0.04f, 0.3f,currentMode);
             }
             // 制限時間が0になったらシーン遷移
-            else if (this.time < 0)
+            // else if (this.time < 0)
+            // {
+            //     counttext.enabled = false;
+            //     timertext.text = this.time.ToString("F2");
+            //     Rpoint = StarController.point;
+            //     SceneManager.LoadScene("Ending");
+            // }
+
+            // モードを追加するためのもの
+            int dice=Random.Range(1,100);
+            if (this.time<=30&&this.currentMode == "normal" && this.bonusModeCount == 0&&dice<=50)
+            {
+                this.currentMode = "bonus";
+                this.remainingTime = this.time;// 
+                this.time = (float)10.0;         
+
+                this.bonusModeCount++;
+    
+                // 1.3 音声再生
+                // this.aud.PlayOneShot(this.bonusSE);
+            }
+    
+            // 3   �{�[�i�X�X�e�[�W�܂��͔��]�X�e�[�W���I�������ہA�ʏ�X�e�[�W�ɖ߂�B
+            if ((this.time < 0) && ((this.currentMode == "reverse") || (this.currentMode == "bonus")))
+            {
+                counttext.enabled = false;
+                this.currentMode = "normal";
+                this.time = this.remainingTime;
+                // this.aud.PlayOneShot(this.normalSE);
+            }
+    
+            // �c�莞�Ԃ��Ȃ��Ȃ�����V�[���I��
+            if (this.time < 0 && this.currentMode == "normal")
             {
                 counttext.enabled = false;
                 timertext.text = this.time.ToString("F2");
                 Rpoint = StarController.point;
                 SceneManager.LoadScene("Ending");
+                return;
             }
+            
         }
     }
 }
