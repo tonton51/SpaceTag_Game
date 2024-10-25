@@ -56,11 +56,14 @@ public class ItemGenerator : MonoBehaviour
                     if (item != null)  // itemが初期化された場合のみ位置を設定
                     {
                         item.transform.position = new Vector3(x, 7, 0);
+                        item.GetComponent<ItemController>().dropspeed=this.speed;
                     }
                 }
                 
             }
+            
         }
+        
     }
 
 

@@ -27,6 +27,7 @@ public class GameDirector : MonoBehaviour
         timertext.enabled = false;
         counttext.enabled = false;
         this.generator.GetComponent<ItemGenerator>().SetParameter(1.0f, -0.03f, 0.2f,"normal"); // 初期値の設定 float span, float speed, float ratio
+        
     }
 
     // Update is called once per frame
@@ -36,9 +37,9 @@ public class GameDirector : MonoBehaviour
         startflag = ButtonController.startflag;
 
 
-        Rpoint = StarController.point;
+        Rpoint = ItemController.point;
         Rpointtext.text = Rpoint.ToString();
-        Debug.Log(StoneController.stonecount);
+        Debug.Log(ItemController.stonecount);
         if (startflag)
         {
             timertext.enabled = true;
@@ -73,7 +74,7 @@ public class GameDirector : MonoBehaviour
             {
                 counttext.enabled = false;
                 timertext.text = this.time.ToString("F2");
-                this.generator.GetComponent<ItemGenerator>().SetParameter(0.5f, -0.05f, 0.6f,currentMode);
+                this.generator.GetComponent<ItemGenerator>().SetParameter(0.5f, -0.05f, 0.5f,currentMode);
             }
             else if (0 <= this.time && this.time < 10)
             {
@@ -105,7 +106,7 @@ public class GameDirector : MonoBehaviour
             }
     
             // 3   �{�[�i�X�X�e�[�W�܂��͔��]�X�e�[�W���I�������ہA�ʏ�X�e�[�W�ɖ߂�B
-            if ((this.time < 0) && ((this.currentMode == "reverse") || (this.currentMode == "bonus")))
+            if ((this.time < 0) && (this.currentMode == "bonus"))
             {
                 counttext.enabled = false;
                 this.currentMode = "normal";
@@ -118,7 +119,7 @@ public class GameDirector : MonoBehaviour
             {
                 counttext.enabled = false;
                 timertext.text = this.time.ToString("F2");
-                Rpoint = StarController.point;
+                Rpoint = ItemController.point;
                 SceneManager.LoadScene("Ending");
                 return;
             }

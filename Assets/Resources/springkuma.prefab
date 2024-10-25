@@ -184,7 +184,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6352a1775df7746d0be6fdf127c17a90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 10
+  moveSpeed: 2.5
   starSE: {fileID: 8300000, guid: 38fa8e479e8b9454ca0df165ae20149e, type: 3}
 --- !u!82 &8346990472987887604
 AudioSource:

@@ -21,10 +21,10 @@ public class KumaController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float moveHLstick = Input.GetAxis("PS5HorizontalL");
-        float moveVLstick = Input.GetAxis("PS5VerticalL");
-        // float moveHLstick=Input.GetAxis("Stick1Horizontal");
-        // float moveVLstick = Input.GetAxis("Stick1Vertical");
+        // float moveHLstick = Input.GetAxis("PS5HorizontalL");
+        // float moveVLstick = Input.GetAxis("PS5VerticalL");
+        float moveHLstick=Input.GetAxis("Stick1Horizontal");
+        float moveVLstick = Input.GetAxis("Stick1Vertical");
         rb.AddForce(new Vector3(moveHLstick * moveSpeed, moveVLstick * moveSpeed, 0));
 
     }
