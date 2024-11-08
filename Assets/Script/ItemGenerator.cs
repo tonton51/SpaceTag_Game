@@ -29,7 +29,7 @@ public class ItemGenerator : MonoBehaviour
 
         // diceがratio*20より大小で変化させる
         startflag=ButtonController.startflag;
-        if(startflag){
+        // if(startflag){
             this.delta+=Time.deltaTime;
             this.starttime+=Time.deltaTime;
 
@@ -47,12 +47,12 @@ public class ItemGenerator : MonoBehaviour
                     if(currentMode=="normal"){
                         if(dice<=ratio*20){
                             item=Instantiate(Stone) as GameObject;
-                        }else{
-                            item=Instantiate(Star) as GameObject;
-                        }
-                    }else if(currentMode=="bonus"){
-                        item=Instantiate(Star) as GameObject;
-                    }
+                        }// else{
+                        //     item=Instantiate(Star) as GameObject;
+                        // }
+                    }// else if(currentMode=="bonus"){
+                    //     item=Instantiate(Star) as GameObject;
+                    // }
                     if (item != null)  // itemが初期化された場合のみ位置を設定
                     {
                         item.transform.position = new Vector3(x, 7, 0);
@@ -62,7 +62,7 @@ public class ItemGenerator : MonoBehaviour
                 
             }
             
-        }
+       // }
         
     }
 

@@ -11,6 +11,7 @@ public class KumaController : MonoBehaviour
     public AudioClip starSE;
     public AudioClip stoneSE;
     AudioSource aud;
+    float count=3.0f;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,12 +23,15 @@ public class KumaController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float moveHLstick = Input.GetAxis("PS5HorizontalL");
-        float moveVLstick = Input.GetAxis("PS5VerticalL");
-        // float moveHLstick=Input.GetAxis("Stick1Horizontal");
-        // float moveVLstick = Input.GetAxis("Stick1Vertical");
-        rb.AddForce(new Vector3(moveHLstick * moveSpeed, moveVLstick * moveSpeed, 0));
-
+        this.count -= Time.deltaTime;
+    
+        if(count<=0){
+            float moveHLstick = Input.GetAxis("PS5HorizontalL");
+            float moveVLstick = Input.GetAxis("PS5VerticalL");
+            // float moveHLstick=Input.GetAxis("Stick1Horizontal");
+            // float moveVLstick = Input.GetAxis("Stick1Vertical");
+            rb.AddForce(new Vector3(moveHLstick * moveSpeed, moveVLstick * moveSpeed, 0));
+        }
     }
 
     void OnTriggerEnter2D(Collider2D other){

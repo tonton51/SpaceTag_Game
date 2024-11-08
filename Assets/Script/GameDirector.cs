@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 public class GameDirector : MonoBehaviour
 {
     public TextMeshProUGUI Rpointtext;
-    public float time = 48.0f; // 制限時間
+    public float time = 85.0f; // 制限時間
     float count = 3.0f; // カウントダウン
     public TextMeshProUGUI timertext;
     public TextMeshProUGUI counttext;
@@ -50,6 +50,7 @@ public class GameDirector : MonoBehaviour
         
         // 初期設定
         this.generator.GetComponent<ItemGenerator>().SetParameter(1.0f, -0.03f, 0.2f, "normal");
+        Debug.Log(time);
     }
 
     // Update is called once per frame
@@ -71,14 +72,15 @@ public class GameDirector : MonoBehaviour
         
         Debug.Log(Stonecount);
         
-        if (startflag)
-        {
+        // if (startflag)
+        // {
             Endpoint = Rpoint;
             timertext.enabled = true;
             counttext.enabled = true;
             this.time -= Time.deltaTime;
+            // Debug.Log(time);
 
-            if (45 <= this.time && this.time < 48)
+            if (82 <= this.time && this.time < 85)
             {
                 this.count -= Time.deltaTime;
                 if (this.count <= 0.5f)
@@ -91,13 +93,7 @@ public class GameDirector : MonoBehaviour
                 }
             }
 
-            if (this.time < 45 && !bgmflag)
-            {
-                bgmflag = true;  // BGM再生フラグをtrueにする
-                BGMPlay();       // 一度だけBGMPlayを呼び出す
-            }
-
-            if (this.time < 45)
+            if (this.time < 82)
             {
                 counttext.enabled = false;
                 timertext.text = this.time.ToString("F2");
@@ -120,22 +116,22 @@ public class GameDirector : MonoBehaviour
                 }
             }
 
-            int dice = Random.Range(1, 100);
-            if (this.time <= 30 && this.currentMode == "normal" && this.bonusModeCount == 0 && dice <= 50)
-            {
-                aud.PlayOneShot(bonusSE);
-                this.currentMode = "bonus";
-                this.remainingTime = this.time;
-                this.time = 10.0f;         
-                this.bonusModeCount++;
-            }
+            // int dice = Random.Range(1, 100);
+            // if (this.time <= 30 && this.currentMode == "normal" && this.bonusModeCount == 0 && dice <= 50)
+            // {
+            //     aud.PlayOneShot(bonusSE);
+            //     this.currentMode = "bonus";
+            //     this.remainingTime = this.time;
+            //     this.time = 10.0f;         
+            //     this.bonusModeCount++;
+            // }
 
-            if (this.time < 0 && this.currentMode == "bonus")
-            {
-                counttext.enabled = false;
-                this.currentMode = "normal";
-                this.time = this.remainingTime;
-            }
+            // if (this.time < 0 && this.currentMode == "bonus")
+            // {
+            //     counttext.enabled = false;
+            //     this.currentMode = "normal";
+            //     this.time = this.remainingTime;
+            // }
 
             if (this.time < 0 && this.currentMode == "normal")
             {
@@ -145,13 +141,7 @@ public class GameDirector : MonoBehaviour
                 SceneManager.LoadScene("Ending");
                 return;
             }
-        }
+        //}
     }
 
-    // BGMを再生するメソッド
-    void BGMPlay()
-    {
-        Debug.Log("BGM");
-        BGM.Play();
-    }
 }

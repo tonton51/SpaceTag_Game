@@ -10,6 +10,7 @@ public class RocketController : MonoBehaviour
     public AudioClip starSE;
     public AudioClip stoneSE;
     AudioSource aud;
+    float count=3.0f;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,11 +21,15 @@ public class RocketController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float moveHRstick = Input.GetAxis("PS5HorizontalR");
-        float moveVRstick = Input.GetAxis("PS5VerticalR");
-        // float moveHRstick=Input.GetAxis("Stick2Horizontal");
-        // float moveVRstick = Input.GetAxis("Stick2Vertical");
-        rb.AddForce(new Vector3(moveHRstick * moveSpeed, moveVRstick * moveSpeed, 0));
+        this.count -= Time.deltaTime;
+    
+        if(count<=0){
+            float moveHRstick = Input.GetAxis("PS5HorizontalR");
+            float moveVRstick = Input.GetAxis("PS5VerticalR");
+            // float moveHRstick=Input.GetAxis("Stick2Horizontal");
+            // float moveVRstick = Input.GetAxis("Stick2Vertical");
+            rb.AddForce(new Vector3(moveHRstick * moveSpeed, moveVRstick * moveSpeed, 0));
+        }
     }
 
 
