@@ -9,7 +9,7 @@ public class ItemGenerator : MonoBehaviour
     float delta=0; // 時間計測用
     float starttime=0; // カウントダウンまでアイテムを生成しない用
     float ratio=0.2f; // 隕石生成する確率
-    float speed=-0.03f;
+    float speed=-0.05f;
     public static bool startflag; // スタートボタンが押されたか否か
     public GameObject Star;
     public GameObject Stone;

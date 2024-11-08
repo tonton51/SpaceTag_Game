@@ -7,49 +7,81 @@ using UnityEngine.SceneManagement;
 // ゲーム全体の監督用スクリプト（点数、役割、時間を管理）
 public class GameDirector : MonoBehaviour
 {
-    // public TextMeshProUGUI[] pointtext;
     public TextMeshProUGUI Rpointtext;
     public float time = 48.0f; // 制限時間
     float count = 3.0f; // カウントダウン
     public TextMeshProUGUI timertext;
     public TextMeshProUGUI counttext;
     public static int Rpoint;
-    public static bool startflag;
-    public GameObject generator; // generatorに値をセットする
+    public static bool startflag = false;
+    public GameObject generator;
+    public static int Stonecount = 0;
+    public static int Endpoint;
+    public List<GameObject> HP;
+    public AudioClip CountSE;
+    public AudioClip bonusSE;
+    public AudioSource BGM;
+    AudioSource aud;
+    private bool bgmflag = false;
     
-    public string currentMode="normal"; // モード設定用
-    int bonusModeCount=0; // カウント用
-    float remainingTime; 
+    public string currentMode = "normal"; // モード設定用
+    int bonusModeCount = 0; // カウント用
+    float remainingTime;
 
     // Start is called before the first frame update
     void Start()
     {
+        Rpoint = 0;
+        
+        // メインのサウンドとBGM用のAudioSourceを設定
+        aud = GetComponent<AudioSource>();
+        
+        Debug.Log("Start");
+        Stonecount = 0;
+        
+        // HPオブジェクトを初期化
+        for (int i = 0; i < 3; i++)
+        {
+            HP[i].GetComponent<Renderer>().enabled = true; // 表示する場合
+        }
+        
         timertext.enabled = false;
         counttext.enabled = false;
-        this.generator.GetComponent<ItemGenerator>().SetParameter(1.0f, -0.03f, 0.2f,"normal"); // 初期値の設定 float span, float speed, float ratio
         
+        // 初期設定
+        this.generator.GetComponent<ItemGenerator>().SetParameter(1.0f, -0.03f, 0.2f, "normal");
     }
 
     // Update is called once per frame
     void Update()
     {
-        // TODO startflagの削除とexplainSceneの追加
         startflag = ButtonController.startflag;
 
-
-        Rpoint = ItemController.point;
+        // HPの非表示設定
+        if (Stonecount > 0)
+        {
+            HP[Stonecount - 1].GetComponent<Renderer>().enabled = false;
+        }
+        if (Stonecount == 3)
+        {
+            SceneManager.LoadScene("Ending");
+        }
+        
         Rpointtext.text = Rpoint.ToString();
-        Debug.Log(ItemController.stonecount);
+        
+        Debug.Log(Stonecount);
+        
         if (startflag)
         {
+            Endpoint = Rpoint;
             timertext.enabled = true;
             counttext.enabled = true;
-            this.time -= Time.deltaTime; // 時間管理
-            // 3count用
+            this.time -= Time.deltaTime;
+
             if (45 <= this.time && this.time < 48)
             {
                 this.count -= Time.deltaTime;
-                if (this.count < 1.0f)
+                if (this.count <= 0.5f)
                 {
                     counttext.text = "START";
                 }
@@ -58,63 +90,53 @@ public class GameDirector : MonoBehaviour
                     counttext.text = this.count.ToString("F0");
                 }
             }
-            else if (30 <= this.time && this.time < 45)
-            {
-                counttext.enabled = false;
-                timertext.text = this.time.ToString("F2");
-                this.generator.GetComponent<ItemGenerator>().SetParameter(1.0f, -0.03f, 0.2f,currentMode);
-            }
-            else if (20 <= this.time && this.time < 30)
-            {
-                counttext.enabled = false;
-                timertext.text = this.time.ToString("F2");
-                this.generator.GetComponent<ItemGenerator>().SetParameter(0.8f, -0.04f, 0.4f,currentMode);
-            }
-            else if (10 <= this.time && this.time < 20)
-            {
-                counttext.enabled = false;
-                timertext.text = this.time.ToString("F2");
-                this.generator.GetComponent<ItemGenerator>().SetParameter(0.5f, -0.05f, 0.5f,currentMode);
-            }
-            else if (0 <= this.time && this.time < 10)
-            {
-                counttext.enabled = false;
-                timertext.text = this.time.ToString("F2");
-                this.generator.GetComponent<ItemGenerator>().SetParameter(0.7f, -0.04f, 0.3f,currentMode);
-            }
-            // 制限時間が0になったらシーン遷移
-            // else if (this.time < 0)
-            // {
-            //     counttext.enabled = false;
-            //     timertext.text = this.time.ToString("F2");
-            //     Rpoint = StarController.point;
-            //     SceneManager.LoadScene("Ending");
-            // }
 
-            // モードを追加するためのもの
-            int dice=Random.Range(1,100);
-            if (this.time<=30&&this.currentMode == "normal" && this.bonusModeCount == 0&&dice<=50)
+            if (this.time < 45 && !bgmflag)
             {
+                bgmflag = true;  // BGM再生フラグをtrueにする
+                BGMPlay();       // 一度だけBGMPlayを呼び出す
+            }
+
+            if (this.time < 45)
+            {
+                counttext.enabled = false;
+                timertext.text = this.time.ToString("F2");
+
+                if (30 <= this.time && this.time < 45)
+                {
+                    this.generator.GetComponent<ItemGenerator>().SetParameter(1.0f, -0.03f, 0.2f, currentMode);
+                }
+                else if (20 <= this.time && this.time < 30)
+                {
+                    this.generator.GetComponent<ItemGenerator>().SetParameter(0.8f, -0.04f, 0.3f, currentMode);
+                }
+                else if (10 <= this.time && this.time < 20)
+                {
+                    this.generator.GetComponent<ItemGenerator>().SetParameter(0.5f, -0.05f, 0.2f, currentMode);
+                }
+                else if (0 <= this.time && this.time < 10)
+                {
+                    this.generator.GetComponent<ItemGenerator>().SetParameter(0.7f, -0.04f, 0.3f, currentMode);
+                }
+            }
+
+            int dice = Random.Range(1, 100);
+            if (this.time <= 30 && this.currentMode == "normal" && this.bonusModeCount == 0 && dice <= 50)
+            {
+                aud.PlayOneShot(bonusSE);
                 this.currentMode = "bonus";
-                this.remainingTime = this.time;// 
-                this.time = (float)10.0;         
-
+                this.remainingTime = this.time;
+                this.time = 10.0f;         
                 this.bonusModeCount++;
-    
-                // 1.3 音声再生
-                // this.aud.PlayOneShot(this.bonusSE);
             }
-    
-            // 3   �{�[�i�X�X�e�[�W�܂��͔��]�X�e�[�W���I�������ہA�ʏ�X�e�[�W�ɖ߂�B
-            if ((this.time < 0) && (this.currentMode == "bonus"))
+
+            if (this.time < 0 && this.currentMode == "bonus")
             {
                 counttext.enabled = false;
                 this.currentMode = "normal";
                 this.time = this.remainingTime;
-                // this.aud.PlayOneShot(this.normalSE);
             }
-    
-            // �c�莞�Ԃ��Ȃ��Ȃ�����V�[���I��
+
             if (this.time < 0 && this.currentMode == "normal")
             {
                 counttext.enabled = false;
@@ -123,7 +145,13 @@ public class GameDirector : MonoBehaviour
                 SceneManager.LoadScene("Ending");
                 return;
             }
-            
         }
+    }
+
+    // BGMを再生するメソッド
+    void BGMPlay()
+    {
+        Debug.Log("BGM");
+        BGM.Play();
     }
 }

@@ -9,6 +9,9 @@ public class ButtonController : MonoBehaviour
 {
     public GameObject StartButton;
     public static bool startflag=false;
+    void Start(){
+        startflag=false;
+    }
 
     // local用
     public void StartButtonClick(){
@@ -17,5 +20,9 @@ public class ButtonController : MonoBehaviour
     public void GameStartButtonClick(){
         startflag=true;
         StartButton.SetActive(false);
+    }
+
+    public void RetryButtonClick(){
+        SceneManager.LoadScene("GameScene");
     }
 }

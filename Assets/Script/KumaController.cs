@@ -9,6 +9,7 @@ public class KumaController : MonoBehaviour
     public float moveSpeed;
     Rigidbody2D rb;
     public AudioClip starSE;
+    public AudioClip stoneSE;
     AudioSource aud;
     // Start is called before the first frame update
     void Start()
@@ -21,10 +22,10 @@ public class KumaController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // float moveHLstick = Input.GetAxis("PS5HorizontalL");
-        // float moveVLstick = Input.GetAxis("PS5VerticalL");
-        float moveHLstick=Input.GetAxis("Stick1Horizontal");
-        float moveVLstick = Input.GetAxis("Stick1Vertical");
+        float moveHLstick = Input.GetAxis("PS5HorizontalL");
+        float moveVLstick = Input.GetAxis("PS5VerticalL");
+        // float moveHLstick=Input.GetAxis("Stick1Horizontal");
+        // float moveVLstick = Input.GetAxis("Stick1Vertical");
         rb.AddForce(new Vector3(moveHLstick * moveSpeed, moveVLstick * moveSpeed, 0));
 
     }
@@ -33,6 +34,8 @@ public class KumaController : MonoBehaviour
         // 点数用
         if(other.gameObject.tag=="star"){ 
             aud.PlayOneShot(starSE);
-        }        
+        }else if(other.gameObject.tag=="stone"){
+            aud.PlayOneShot(stoneSE);
+        }  
     }
 }

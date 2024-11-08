@@ -8,6 +8,7 @@ public class RocketController : MonoBehaviour
     public float moveSpeed;
     Rigidbody2D rb;
     public AudioClip starSE;
+    public AudioClip stoneSE;
     AudioSource aud;
     // Start is called before the first frame update
     void Start()
@@ -19,18 +20,20 @@ public class RocketController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // float moveHRstick = Input.GetAxis("PS5HorizontalR");
-        // float moveVRstick = Input.GetAxis("PS5VerticalR");
-        float moveHRstick=Input.GetAxis("Stick2Horizontal");
-        float moveVRstick = Input.GetAxis("Stick2Vertical");
+        float moveHRstick = Input.GetAxis("PS5HorizontalR");
+        float moveVRstick = Input.GetAxis("PS5VerticalR");
+        // float moveHRstick=Input.GetAxis("Stick2Horizontal");
+        // float moveVRstick = Input.GetAxis("Stick2Vertical");
         rb.AddForce(new Vector3(moveHRstick * moveSpeed, moveVRstick * moveSpeed, 0));
     }
 
 
-        void OnTriggerEnter2D(Collider2D other){
+    void OnTriggerEnter2D(Collider2D other){
         // 点数用
         if(other.gameObject.tag=="star"){ 
             aud.PlayOneShot(starSE);
-        }        
+        }else if(other.gameObject.tag=="stone"){
+            aud.PlayOneShot(stoneSE);
+        }
     }
 }

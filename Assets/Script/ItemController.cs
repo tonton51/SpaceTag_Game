@@ -15,10 +15,10 @@ public class ItemController : MonoBehaviour
         // 点数用
         if(tag=="star"){
             if(other.gameObject.tag=="kuma"||other.gameObject.tag=="rocket"){ 
-                point++;
+                GameDirector.Rpoint++;
             }
         }else{
-            stonecount++;
+            GameDirector.Stonecount++;
         }
         Destroy(gameObject);
         
@@ -28,13 +28,8 @@ public class ItemController : MonoBehaviour
     // 画面外にいったら削除
     void Update()
     {
-        transform.Translate(0,this.dropspeed/2.0f,0);
-        if(tag=="star"){
-            Debug.Log("star"+dropspeed);
-        }else{
-            Debug.Log("stone"+dropspeed);
-        }
-        if(transform.position.y<-4.0f){
+        transform.Translate(0,this.dropspeed/5.0f,0);
+        if(transform.position.y<-5.5f){
             Destroy(gameObject);
         }
     }

@@ -12,7 +12,8 @@ public class ResultDirector : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Kumaresult.text=GameDirector.Rpoint.ToString();
+        Kumaresult.text="Point"+GameDirector.Endpoint.ToString();
+        Rocketresult.text="Stone"+GameDirector.Stonecount.ToString();
         // Kumaresult.text="Kuma"+GameDirector.Rpoint[0].ToString();
         // Rocketresult.text="Rocket"+GameDirector.Rpoint[1].ToString();
     }
