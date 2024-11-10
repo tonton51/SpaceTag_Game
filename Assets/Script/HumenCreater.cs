@@ -26,7 +26,7 @@ public class HumenCreater : MonoBehaviour
         }
     }
 
-    // リストにデータを格納
+    // csvファイル格納用のtimeobject型のリスト
     public List<TimedObject> timedObjects = new List<TimedObject>();
 
     void Start()
@@ -36,18 +36,25 @@ public class HumenCreater : MonoBehaviour
 
     void LoadCSV()
     {
+        // fileのパス指定、Path.Combineでunityがあるパスとunity内のdata〜pathを組み合わせて指定
         string filePath = Path.Combine(Application.dataPath, "Data/itemtime.csv");
 
+        // fileが存在していたら
         if (File.Exists(filePath))
         {
+            // 全ての行を読み取り
             string[] csvData = File.ReadAllLines(filePath);
 
+            // 1行目から全て取っていく
             for (int i = 1; i < csvData.Length; i++)  // 1行目はヘッダーなのでスキップ
             {
+                // カンマで区切り
                 string[] row = csvData[i].Split(',');
-
+                // timeとplaceを数値に変換できるなら
+                // TryParse()float,intに変換
                 if (float.TryParse(row[0], out float time) && int.TryParse(row[2], out int place))
                 {
+                    // timeobjectsリストに追加
                     string objectName = row[1];
                     TimedObject timedObject = new TimedObject(time, objectName, place);
                     timedObjects.Add(timedObject);
@@ -70,7 +77,7 @@ public class HumenCreater : MonoBehaviour
     {
         humentime += Time.deltaTime;
         GameObject item = null;
-        
+        // timeと同じ、または小さくなったら
         while (nextIndex < timedObjects.Count && humentime >= timedObjects[nextIndex].time)
         {
             bool sameflag = false;
@@ -90,7 +97,7 @@ public class HumenCreater : MonoBehaviour
 
             item.transform.position = new Vector3(timedObjects[nextIndex].place, 7, 0);
             nextIndex++;
-
+            // 二個同時
             if (sameflag)
             {
                 if (timedObjects[nextIndex].objectName == "star")

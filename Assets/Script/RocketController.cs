@@ -24,10 +24,10 @@ public class RocketController : MonoBehaviour
         this.count -= Time.deltaTime;
     
         if(count<=0){
-            float moveHRstick = Input.GetAxis("PS5HorizontalR");
-            float moveVRstick = Input.GetAxis("PS5VerticalR");
-            // float moveHRstick=Input.GetAxis("Stick2Horizontal");
-            // float moveVRstick = Input.GetAxis("Stick2Vertical");
+            // float moveHRstick = Input.GetAxis("PS5HorizontalR");
+            // float moveVRstick = Input.GetAxis("PS5VerticalR");
+            float moveHRstick=Input.GetAxis("Stick2Horizontal");
+            float moveVRstick = Input.GetAxis("Stick2Vertical");
             rb.AddForce(new Vector3(moveHRstick * moveSpeed, moveVRstick * moveSpeed, 0));
         }
     }

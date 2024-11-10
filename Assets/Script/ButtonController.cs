@@ -18,7 +18,7 @@ public class ButtonController : MonoBehaviour
         SceneManager.LoadScene("GameScene");
     }
     public void GameStartButtonClick(){
-        startflag=true;
+        // startflag=true;
         StartButton.SetActive(false);
     }
 

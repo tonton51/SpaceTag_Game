@@ -17,8 +17,10 @@ public class ItemController : MonoBehaviour
             if(other.gameObject.tag=="kuma"||other.gameObject.tag=="rocket"){ 
                 GameDirector.Rpoint++;
             }
-        }else{
-            GameDirector.Stonecount++;
+        }else if(tag=="stone"){
+            if(other.gameObject.tag=="kuma"||other.gameObject.tag=="rocket"){ 
+                GameDirector.Stonecount++;
+            }   
         }
         Destroy(gameObject);
         

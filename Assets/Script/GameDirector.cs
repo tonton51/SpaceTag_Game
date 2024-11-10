@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 public class GameDirector : MonoBehaviour
 {
     public TextMeshProUGUI Rpointtext;
-    public float time = 85.0f; // 制限時間
+    public float time = 85.0f; // 制限時間 85s 48s
     float count = 3.0f; // カウントダウン
     public TextMeshProUGUI timertext;
     public TextMeshProUGUI counttext;
@@ -20,9 +20,8 @@ public class GameDirector : MonoBehaviour
     public List<GameObject> HP;
     public AudioClip CountSE;
     public AudioClip bonusSE;
-    public AudioSource BGM;
     AudioSource aud;
-    private bool bgmflag = false;
+
     
     public string currentMode = "normal"; // モード設定用
     int bonusModeCount = 0; // カウント用
@@ -33,10 +32,9 @@ public class GameDirector : MonoBehaviour
     {
         Rpoint = 0;
         
-        // メインのサウンドとBGM用のAudioSourceを設定
+        // AudioSourceを設定
         aud = GetComponent<AudioSource>();
         
-        Debug.Log("Start");
         Stonecount = 0;
         
         // HPオブジェクトを初期化
@@ -80,6 +78,7 @@ public class GameDirector : MonoBehaviour
             this.time -= Time.deltaTime;
             // Debug.Log(time);
 
+            // 82<85
             if (82 <= this.time && this.time < 85)
             {
                 this.count -= Time.deltaTime;
@@ -92,12 +91,12 @@ public class GameDirector : MonoBehaviour
                     counttext.text = this.count.ToString("F0");
                 }
             }
-
+            // 82 music
             if (this.time < 82)
             {
                 counttext.enabled = false;
                 timertext.text = this.time.ToString("F2");
-
+                // csvファイルじゃないやつ用、石落下のみに使用
                 if (30 <= this.time && this.time < 45)
                 {
                     this.generator.GetComponent<ItemGenerator>().SetParameter(1.0f, -0.03f, 0.2f, currentMode);
@@ -116,6 +115,8 @@ public class GameDirector : MonoBehaviour
                 }
             }
 
+            
+            // 以下ボーナスステージ実装用
             // int dice = Random.Range(1, 100);
             // if (this.time <= 30 && this.currentMode == "normal" && this.bonusModeCount == 0 && dice <= 50)
             // {
@@ -132,6 +133,7 @@ public class GameDirector : MonoBehaviour
             //     this.currentMode = "normal";
             //     this.time = this.remainingTime;
             // }
+            // ここまで
 
             if (this.time < 0 && this.currentMode == "normal")
             {
