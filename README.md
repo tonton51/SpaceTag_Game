@@ -1,6 +1,6 @@
 ## SpaceTag  
 **・ソースコード**  
-[Assets>Script](https://github.com/tonton51/SpaceTag_Game/tree/main/Assets/Script)  
+[Assets>Script](https://github.com/tonton51/SpaceTag_Game/tree/musictest)
 **・プレイ動画**  
 [SpaceTag_紹介動画](https://youtu.be/hFSRcwkSedI)  
 [SpaceTag（制作途中）](https://youtu.be/7HOmGMuRceU)  
