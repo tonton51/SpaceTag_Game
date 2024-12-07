@@ -15,12 +15,14 @@ public class ResultDirector : MonoBehaviour
     private bool autoflag;
     private int Gamecount=0;
     public TextMeshProUGUI ClearText;
+    private int LoopCount;
     
     public BehaviorParameters behaviorParameters;
 
     // Start is called before the first frame update
     void Start()
     {
+        LoopCount=StartDirector.LoopCount;
         Kumaresult.text="Point"+GameDirector.Endpoint.ToString();
         Rocketresult.text="Stone"+GameDirector.Stonecount.ToString();
         Gamecount=StartDirector.Gamecount;
@@ -31,7 +33,7 @@ public class ResultDirector : MonoBehaviour
         }
 
         autoflag = StartDirector.autoflag;
-        if(Gamecount==3){
+        if(Gamecount==LoopCount){
             StartDirector.autoflag=false;
             behaviorParameters.BehaviorType = BehaviorType.HeuristicOnly;
         }

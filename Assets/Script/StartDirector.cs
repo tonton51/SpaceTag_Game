@@ -17,6 +17,9 @@ public class StartDirector : MonoBehaviour
     public static int Gamecount=0;
     public static bool splayerflag;
     public TextMeshProUGUI DebugEndtext;
+    public static int LoopCount;
+    public TMP_InputField inputField;
+    public static Text Looptext;
 
     void Start()
     {
@@ -24,12 +27,15 @@ public class StartDirector : MonoBehaviour
         if(autoflag){
             DebugEndtext.enabled=true;
             DebugEndtext.text="Count"+Gamecount.ToString();
-        }else if(!autoflag&&Gamecount<=3){
+        }else if(!autoflag&&Gamecount<=LoopCount){
             DebugEndtext.enabled=false;
-        }else if(Gamecount>3){
+        }else if(Gamecount>LoopCount){
             DebugEndtext.enabled=true;
             DebugEndtext.text="DebugEnd";
         }
+    }
+    public void InputButtonClick(){
+        LoopCount=int.Parse(inputField.text);
     }
     
     void Update()
@@ -75,5 +81,6 @@ public class StartDirector : MonoBehaviour
         splayerflag=false;
         Debug.Log("push");
     }
+
 
 }
