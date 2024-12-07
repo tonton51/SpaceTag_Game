@@ -13,7 +13,7 @@ public class ResultDirector : MonoBehaviour
     public TextMeshProUGUI Rocketresult;
     public TextMeshProUGUI Kumaresult;
     private bool autoflag;
-    public static int Gamecount=0;
+    private int Gamecount=0;
     public TextMeshProUGUI ClearText;
     
     public BehaviorParameters behaviorParameters;
@@ -23,6 +23,7 @@ public class ResultDirector : MonoBehaviour
     {
         Kumaresult.text="Point"+GameDirector.Endpoint.ToString();
         Rocketresult.text="Stone"+GameDirector.Stonecount.ToString();
+        Gamecount=StartDirector.Gamecount;
         if(GameDirector.Stonecount<3){
             ClearText.text="Clear!";
         }else{
@@ -30,7 +31,6 @@ public class ResultDirector : MonoBehaviour
         }
 
         autoflag = StartDirector.autoflag;
-        Gamecount++;
         if(Gamecount==3){
             StartDirector.autoflag=false;
             behaviorParameters.BehaviorType = BehaviorType.HeuristicOnly;

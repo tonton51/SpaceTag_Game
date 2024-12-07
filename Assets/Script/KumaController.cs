@@ -232,6 +232,7 @@ public class KumaAgent : Agent
     Rigidbody2D rBody;
     AudioSource aud;
     public AudioClip starSE;
+    public AudioClip stoneSE;
 
     public int starCount = 0;
     public List<GameObject> stars = new List<GameObject>(); // 星を管理するリスト
@@ -292,6 +293,9 @@ public class KumaAgent : Agent
             // リストから星を削除
             stars.Remove(other.gameObject);
             Destroy(other.gameObject);
+        }else if (other.gameObject.tag == "stone")
+        {
+            aud.PlayOneShot(stoneSE);
         }
     }
 

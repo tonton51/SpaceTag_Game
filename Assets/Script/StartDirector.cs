@@ -14,12 +14,21 @@ public class StartDirector : MonoBehaviour
     public BehaviorParameters behaviorParameters;
     public Toggle toggle;
     public static bool autoflag;
+    public static int Gamecount=0;
+    public static bool splayerflag;
+    public TextMeshProUGUI DebugEndtext;
 
     void Start()
     {
-        if (behaviorParameters != null)
-        {
-            behaviorParameters.BehaviorType = BehaviorType.HeuristicOnly; // 適切な BehaviorType に変更
+        Gamecount++;
+        if(autoflag){
+            DebugEndtext.enabled=true;
+            DebugEndtext.text="Count"+Gamecount.ToString();
+        }else if(!autoflag&&Gamecount<=3){
+            DebugEndtext.enabled=false;
+        }else if(Gamecount>3){
+            DebugEndtext.enabled=true;
+            DebugEndtext.text="DebugEnd";
         }
     }
     
@@ -56,8 +65,14 @@ public class StartDirector : MonoBehaviour
         }
     }
 
-    public void StartButtonClick(){
+    public void SinglePlayerStartButtonClick(){
         SceneManager.LoadScene("GameScene");
+        splayerflag=true;
+        Debug.Log("push");
+    }
+    public void MultiPlayerStartButtonClick(){
+        SceneManager.LoadScene("GameScene");
+        splayerflag=false;
         Debug.Log("push");
     }
 

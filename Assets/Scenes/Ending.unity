@@ -538,6 +538,50 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &435037421
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 435037423}
+  - component: {fileID: 435037422}
+  m_Layer: 0
+  m_Name: ScoreLog
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &435037422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 435037421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89634a2531bd54812ba2391ad6afe167, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &435037423
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 435037421}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.1695375, y: 0.11697286, z: 1.1979021}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &455192507
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -653,7 +697,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Rocketresult: {fileID: 265716304}
   Kumaresult: {fileID: 183147599}
-  ClearText: {fileID: 0}
+  ClearText: {fileID: 1883114529}
   behaviorParameters: {fileID: 455192508}
 --- !u!4 &555767938
 Transform:
@@ -1212,3 +1256,4 @@ SceneRoots:
   - {fileID: 1729145516}
   - {fileID: 555767938}
   - {fileID: 455192507}
+  - {fileID: 435037423}

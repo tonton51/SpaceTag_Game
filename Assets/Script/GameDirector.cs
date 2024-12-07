@@ -23,6 +23,7 @@ public class GameDirector : MonoBehaviour
     public List<GameObject> HP;
     public AudioClip CountSE;
     public AudioClip bonusSE;
+    public AudioClip normalSE;
     AudioSource aud;
 
 
@@ -38,17 +39,23 @@ public class GameDirector : MonoBehaviour
     public BehaviorParameters kumabehaviorParameters;
     public BehaviorParameters rocketbehaviorParameters;
     private bool autoflag;
+    private bool splayerflag;
     void Start()
     {
         autoflag = StartDirector.autoflag;
-        // staticStartDirector
+        splayerflag = StartDirector.splayerflag;
         if (autoflag)
         {
             kumabehaviorParameters.BehaviorType = BehaviorType.Default; // 適切な BehaviorType に変更
             rocketbehaviorParameters.BehaviorType = BehaviorType.Default; // 適切な BehaviorType に変更
         }else{
-            kumabehaviorParameters.BehaviorType = BehaviorType.HeuristicOnly; // 適切な BehaviorType に変更
-            rocketbehaviorParameters.BehaviorType = BehaviorType.HeuristicOnly; // 適切な BehaviorType に変更
+            if(splayerflag){
+                kumabehaviorParameters.BehaviorType = BehaviorType.HeuristicOnly; // 適切な BehaviorType に変更
+                rocketbehaviorParameters.BehaviorType = BehaviorType.Default; // 適切な BehaviorType に変更
+            }else{
+                kumabehaviorParameters.BehaviorType = BehaviorType.HeuristicOnly; // 適切な BehaviorType に変更
+                rocketbehaviorParameters.BehaviorType = BehaviorType.HeuristicOnly; // 適切な BehaviorType に変更
+            }
         }
 
         Reset();
@@ -156,7 +163,7 @@ public class GameDirector : MonoBehaviour
             
             // 以下ボーナスステージ実装用
             int dice = Random.Range(1, 100);
-            if (this.time <= 30 && this.currentMode == "normal" && this.bonusModeCount == 0 && dice <= 50)
+            if (this.time <= 30 && this.currentMode == "normal" && this.bonusModeCount == 0 && dice <= 20)
             {
                 aud.PlayOneShot(bonusSE);
                 this.currentMode = "bonus";
@@ -167,6 +174,7 @@ public class GameDirector : MonoBehaviour
 
             if (this.time < 0 && this.currentMode == "bonus")
             {
+                aud.PlayOneShot(normalSE);
                 counttext.enabled = false;
                 this.currentMode = "normal";
                 this.time = this.remainingTime;

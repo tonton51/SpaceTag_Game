@@ -14,6 +14,8 @@ public class ItemGenerator : MonoBehaviour
     public GameObject Star;
     public GameObject Stone;
     string currentMode="normal"; // モード設定用
+    int idx=1;
+    int stoneidx=1;
 
     public void SetParameter(float span, float speed, float ratio,string mode){
         this.span=span;
@@ -47,15 +49,32 @@ public class ItemGenerator : MonoBehaviour
                     if(currentMode=="normal"){
                         if(dice<=ratio*20){
                             item=Instantiate(Stone) as GameObject;
+                            item.name="stone"+stoneidx;
+                            var stoneLog=item.AddComponent<StoneLog>();
+                            stoneLog.idx=stoneidx;
+                            stoneidx++;
                         }
                         // コメントアウトしてた部分
                         else{
                              item=Instantiate(Star) as GameObject;
+                                // Starを生成
+                                 item.name = "star" + idx;
+                                // StarLoggerを追加して、idxを設定
+                                var starLogger = item.AddComponent<StarLog>();  // StarLoggerスクリプトを追加
+                                starLogger.idx = idx;  // idxをセット
+                                idx++;
                          }
                     }
                     // // else ifコメントアウトした部分
                     else if(currentMode=="bonus"){
                          item=Instantiate(Star) as GameObject;
+                         // Starを生成
+                        // var starobj = Instantiate(Star, new Vector3(x, 7, 0), Quaternion.identity);
+                        item.name = "star" + idx;
+                        // StarLoggerを追加して、idxを設定
+                        var starLog = item.AddComponent<StarLog>();  // StarLoggerスクリプトを追加
+                        starLog.idx = idx;  // idxをセット
+                        idx++;
                     }
                     if (item != null)  // itemが初期化された場合のみ位置を設定
                     {
