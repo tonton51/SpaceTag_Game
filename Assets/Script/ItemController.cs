@@ -13,16 +13,33 @@ public class ItemController : MonoBehaviour
     // プレイヤーとぶつかった時の判定
      void OnTriggerEnter2D(Collider2D other){
         // 点数用
-        if(tag=="star"){
-            if(other.gameObject.tag=="kuma"||other.gameObject.tag=="rocket"){ 
-                GameDirector.Rpoint++;
-            }
-        }else if(tag=="stone"){
-            if(other.gameObject.tag=="kuma"||other.gameObject.tag=="rocket"){ 
-                GameDirector.Stonecount++;
-            }   
-        }
-        Destroy(gameObject);
+        //if(tag=="just"){
+            // if(tag=="star"){
+            //     if(other.gameObject.tag=="kuma"||other.gameObject.tag=="rocket"){ 
+            //         GameDirector.Rpoint+=2;
+            //         Destroy(gameObject);
+            //     }
+            // }else if(tag=="stone"){
+            //     if(other.gameObject.tag=="kuma"||other.gameObject.tag=="rocket"){ 
+            //         GameDirector.Stonecount+=2;
+            //         Destroy(gameObject);
+            //     }   
+            // }
+            // Debug.Log("just");
+        //}else{
+            if(tag=="star"){
+                    if(other.gameObject.tag=="kuma"||other.gameObject.tag=="rocket"){ 
+                        GameDirector.Rpoint++;
+                        Destroy(gameObject);
+                    }
+                }else if(tag=="stone"){
+                    if(other.gameObject.tag=="kuma"||other.gameObject.tag=="rocket"){ 
+                        GameDirector.Stonecount++;
+                        Destroy(gameObject);
+                    }   
+                }
+        //}
+        // Destroy(gameObject);
         
     }
 

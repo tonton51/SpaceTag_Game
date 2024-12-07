@@ -49,14 +49,14 @@ public class ItemGenerator : MonoBehaviour
                             item=Instantiate(Stone) as GameObject;
                         }
                         // コメントアウトしてた部分
-                        // else{
-                        //      item=Instantiate(Star) as GameObject;
-                        //  }
+                        else{
+                             item=Instantiate(Star) as GameObject;
+                         }
                     }
                     // // else ifコメントアウトした部分
-                    // else if(currentMode=="bonus"){
-                    //      item=Instantiate(Star) as GameObject;
-                    // }
+                    else if(currentMode=="bonus"){
+                         item=Instantiate(Star) as GameObject;
+                    }
                     if (item != null)  // itemが初期化された場合のみ位置を設定
                     {
                         item.transform.position = new Vector3(x, 7, 0);

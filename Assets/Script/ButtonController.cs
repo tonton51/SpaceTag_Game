@@ -16,13 +16,14 @@ public class ButtonController : MonoBehaviour
     // local用
     public void StartButtonClick(){
         SceneManager.LoadScene("GameScene");
+        Debug.Log("push");
     }
     public void GameStartButtonClick(){
-        // startflag=true;
+        startflag=true;
         StartButton.SetActive(false);
     }
 
     public void RetryButtonClick(){
-        SceneManager.LoadScene("GameScene");
+        SceneManager.LoadScene("StartScene");
     }
 }
